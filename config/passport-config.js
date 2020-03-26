@@ -1,33 +1,34 @@
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const bcrypt = require('bcrypt');
 
-function initialize(passport, getUserByEmail) {
+function initialize(passport, getUserByEmail, getUserById) {
+
     const authenticateUser = async (email, password, done) => {
-        const user = getUserByEmail(email);
-        if (user === null) {
-            return done(null, false, { message: 'That email address is not registered.' });
+        const user = getUserByEmail(email)
+        if (user == null) {
+            return done(null, false, { message: 'That email address is not registered.' })
         }
 
         try {
             if (await bcrypt.compare(password, user.password)) {
-                return done(null, user);
+                return done(null, user)
             } else {
-                return done(null, false, { message: 'Password is incorrect.' });
+                return done(null, false, { message: 'Password is incorrect.' })
             }
         } catch (e) {
-            return done(e);
+            return done(e)
         }
-    };
-    passport.use(new LocalStrategy({ usernameField: 'email' },
-        authenticateUser));
+    }
 
-    passport.serializeUser((user, done) => done(null, user.id));
+    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+    passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser((id, done) => {
-        return done(null, false);
-    });
+        return done(null, getUserById(id))
+    })
 
     passport.use(new GoogleStrategy({
         callbackURL: 'http://localhost:8080/auth/google/cb',
