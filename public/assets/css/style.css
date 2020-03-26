@@ -13,3 +13,41 @@ h6 {
 .fail {
     color: red;
 }
+
+.fa-leaf {
+    color: green;
+    position: relative;
+    top: .5em;
+    right: 1.5em;
+}
+
+.fa-recycle {
+    color: green;
+    position: relative;
+    top: 1em;
+    left: .3em;
+    margin-top: 2em;
+}
+
+.fa-lightbulb{
+    color: green;
+    position: relative;
+    top: 1em;
+    left: .5em;
+}
+
+li {
+    margin-left: 3em;
+}
+
+.card:hover {
+    border: solid 3px green;
+}
+
+.card {
+    border: solid 1px green;
+}
+
+.google-btn:hover, .facebook-btn:hover, .twitter-btn:hover, .btn-flat:hover {
+    color: blue;
+}

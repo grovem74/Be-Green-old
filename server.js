@@ -27,7 +27,7 @@ const users = [];
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use(express.static("public")); 
+app.use(express.static("public"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(flash())
@@ -44,6 +44,14 @@ app.use(methodOverride("_method"));
 // routes
 app.get("/", checkAuthenticated, (req, res) => {
     res.render("index", { name: req.user.name })
+});
+
+app.get("/map", (req, res) => {
+    res.render("map");
+});
+
+app.get("/tips", (req, res) => {
+    res.render("tips");
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
@@ -89,11 +97,11 @@ app.get("/auth/google", passport.authenticate("google", {
     scope: ["profile"]
 }));
 
-app.get("/auth/google/cb",
-    passport.authenticate("google", {
-        successRedirect: "/success",
-        failureRedirect: "/"
-    }));
+app.get("/auth/google/cb", passport.authenticate("google", {
+    successRedirect: "/success",
+    failureRedirect: "/",
+    failureFlash: true
+}));
 
 // authenticate with Facebook
 app.get("/auth/facebook", passport.authenticate("facebook", {
@@ -102,7 +110,8 @@ app.get("/auth/facebook", passport.authenticate("facebook", {
 app.get("/auth/facebook/cb",
     passport.authenticate("facebook", {
         successRedirect: "/success",
-        failureRedirect: "/"
+        failureRedirect: "/",
+        failureFlash: true
     }));
 
 // authenticate with Twitter
@@ -112,7 +121,8 @@ app.get("/auth/twitter", passport.authenticate("twitter", {
 app.get("/auth/twitter/cb",
     passport.authenticate("twitter", {
         successRedirect: "/success",
-        failureRedirect: "/"
+        failureRedirect: "/",
+        failureFlash: true
     }));
 
 app.get("/success", checkNotAuthenticated, (req, res) => {
