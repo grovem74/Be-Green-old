@@ -21,9 +21,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.4"
-  },
-  "devDependencies": {
+    "passport-twitter": "^1.0.4",
     "dotenv": "^8.2.0"
   }
 }

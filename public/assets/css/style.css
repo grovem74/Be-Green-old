@@ -1,8 +1,12 @@
+.title {
+    color: #2196f3;
+}
+
 .btn-flat {
     color: white
 }
 
-h1, h6 {
+h1, h6, i {
     color: green;
 }
 
@@ -41,13 +45,25 @@ li {
 }
 
 .card:hover {
-    border: solid 3px green;
+    border: solid 2px #1565c0;
 }
 
-.card {
-    border: solid 1px green;
+.google-btn:hover, .facebook-btn:hover, .twitter-btn:hover, .btn-flat:hover, a:hover {
+    color: #1565c0;
 }
 
-.google-btn:hover, .facebook-btn:hover, .twitter-btn:hover, .btn-flat:hover {
-    color: blue;
+.profile-pic {
+    width: 11em;
+    height: 8em;
+    margin-right: 3em;
+}
+
+.trophy {
+    width: 5em;
+    height: 5em;
+}
+
+#tips {
+    position:   relative;
+    left: 6em;
 }

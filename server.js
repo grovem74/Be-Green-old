@@ -54,6 +54,10 @@ app.get("/tips", (req, res) => {
     res.render("tips");
 });
 
+app.get("/profile", (req, res) => {
+    res.render("profile");
+});
+
 app.get("/login", checkNotAuthenticated, (req, res) => {
     res.render("login")
 });
