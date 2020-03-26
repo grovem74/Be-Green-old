@@ -1,25 +1,146 @@
+// // Load environment variables and set inside process.env
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
+// // dependencies
 const express = require("express");
-
-const app = express();
+const exphbs = require("express-handlebars");
 const PORT = process.env.PORT || 8080;
+const app = express();
+const passport = require("passport");
+const flash = require("express-flash");
+const session = require("express-session");
+const methodOverride = require("method-override")
+const bcrypt = require("bcrypt");
 
-//Need database
-var db = require("");
+const initializePassport = require("./config/passport-config");
+initializePassport(
+    passport,
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+)
 
-// Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const users = [];
 
-// Static directory
-app.use(express.static("public"));
+// setup view engine
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-//Routes
-var routes = require('./routes');
-app.use(routes);
+app.use(express.static("public")); 
+
+app.use(express.urlencoded({ extended: false }));
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,  // do not resave if nothing has changed
+    saveUninitialized: false,  // do not save empty values
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride("_method"));
+
+// routes
+app.get("/", checkAuthenticated, (req, res) => {
+    res.render("index", { name: req.user.name })
+});
+
+app.get("/login", checkNotAuthenticated, (req, res) => {
+    res.render("login")
+});
+
+app.get("/register", checkNotAuthenticated, (req, res) => {
+    res.render("register")
+});
+
+app.post("/login", checkNotAuthenticated, passport.authenticate("local", {
+    successRedirect: "/success",
+    failureRedirect: "/login",
+    failureFlash: true
+}));
+
+app.post("/register", checkNotAuthenticated, async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10) // hash user password 10 times
+        users.push({
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        });
+        res.redirect("/login");
+    } catch {
+        res.redirect("/register");
+    }
+    console.log(users);
+})
+
+app.delete("/logout", (req, res) => {
+    req.logOut();
+    res.redirect("/");
+})
 
 
-db.sequelize.sync({ force: true }).then(function () {
-    app.listen(PORT, function () {
-        console.log(`App is now listening on ${PORT}`);
-    });
+// auth routes
+
+// authenticate with Google
+app.get("/auth/google", passport.authenticate("google", {
+    scope: ["profile"]
+}));
+
+app.get("/auth/google/cb",
+    passport.authenticate("google", {
+        successRedirect: "/success",
+        failureRedirect: "/"
+    }));
+
+// authenticate with Facebook
+app.get("/auth/facebook", passport.authenticate("facebook", {
+}));
+
+app.get("/auth/facebook/cb",
+    passport.authenticate("facebook", {
+        successRedirect: "/success",
+        failureRedirect: "/"
+    }));
+
+// authenticate with Twitter
+app.get("/auth/twitter", passport.authenticate("twitter", {
+}));
+
+app.get("/auth/twitter/cb",
+    passport.authenticate("twitter", {
+        successRedirect: "/success",
+        failureRedirect: "/"
+    }));
+
+app.get("/success", checkNotAuthenticated, (req, res) => {
+    res.render("success")
+});
+
+app.delete("/auth/logout", (req, res) => {
+    req.logOut();
+    res.redirect("/");
+})
+
+// Redirect unauthenticated user to login page if authentication required
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+    next();
+}
+
+// starting Express app
+
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
 });

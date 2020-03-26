@@ -1,0 +1,15 @@
+.btn-flat {
+    color: white
+}
+
+h1, h6 {
+    color: green;
+}
+
+h6 {
+    font-weight: 700;
+}
+
+.fail {
+    color: red;
+}

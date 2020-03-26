@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <h1>Be Green</h1>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col s3"></div>
+        <div class="col s6">
+            {{#if messages.error}}
+            <span class="fail">{{messages.error}}</span>
+            {{/if}}
+            <h6>Sign in with e-mail/password:</h6>
+            <form action="/login" method="POST">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div><br>
+                <button type="submit" class="btn-flat green">Login</button> <a href="/register">Register</a>
+            </form>
+        </div>
+        <div class="col s3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <h6>Sign in with:</h6>
+            <a class="google-btn btn-flat green" href="/auth/google">Google</a>
+            <a class="facebook-btn btn-flat green" href="/auth/facebook">FACEBOOK</a>
+            <a class="twitter-btn btn-flat green" href="/auth/twitter">TWITTER</a>
+        </div>
+        <div class="col s3"></div>
+    </div>
+</div>
