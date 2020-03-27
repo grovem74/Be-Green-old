@@ -3,6 +3,7 @@
   <head>
     <title>Place Searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -17,40 +18,77 @@
         padding: 0;
       }
     </style>
+
+
     <script>
+
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-      var map;
+     // var map;
       var service;
       var infowindow;
 
-      function initMap() {
-        var sydney = new google.maps.LatLng(-33.867, 151.195);
+      function initMap(_locations)  {
+        console.log(_locations)
+        var sydney= new google.maps.LatLng(39.7392, -104.9903);
 
-        infowindow = new google.maps.InfoWindow();
+        // infowindow = new google.maps.InfoWindow();
 
-        map = new google.maps.Map(
-            document.getElementById('map'), {center: sydney, zoom: 15});
+        // map = new google.maps.Map(
+        //     document.getElementById('map'), {center: sydney, zoom: 15});
 
-        var request = {
-          query: 'Recycle',
-          fields: ['name', 'geometry'],
-        };
+      //   var request = {
+      //     query: 'Recycle',
+      //     fields: ['name', 'geometry'],
+      //   };
 
-        service = new google.maps.places.PlacesService(map);
+      //   service = new google.maps.places.PlacesService(map);
 
-        service.findPlaceFromQuery(request, function(results, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              createMarker(results[i]);
-            }
+      //   service.findPlaceFromQuery(request, function(results, status) {
+      //     console.log(results)
+      //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+      //       for (var i = 0; i < results.length; i++) {
+      //         createMarker(results[i]);
+      //       }
 
-            map.setCenter(results[0].geometry.location);
-          }
-        });
-      }
+      //       map.setCenter(results[0].geometry.location);
+      //     }
+      //   });
+      // }
+
+       locations = _locations ? _locations : [
+      ['Bondi Beach', -33.890542, 151.274856, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+      ['Maroubra Beach', -33.950198, 151.259302, 1]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(39.742043, -104.991531),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
 
       function createMarker(place) {
         var marker = new google.maps.Marker({
@@ -63,10 +101,59 @@
           infowindow.open(map, this);
         });
       }
+    }
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    $("#demo").html ( "<div>Geolocation is not supported by this browser.</div>");
+  }
+}
+
+function showPosition(position) {
+  $("#demo").html("<div> Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude + "</div>")
+
+var location = `https://api.earth911.com/earth911.searchLocations?api_key=7827591ea2eb59e9&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+console.log("this is location",location)
+$.get(location,(data)=>{
+  data = JSON.parse(data)
+ // console.log("this is data",JSON.stringify(data.result,null,2))
+
+  const recycleLocations = data.result.map((location,index) => {
+    return [location.description,location.longitude,location.latitude,index +1]
+  })
+  initMap(recycleLocations.slice(0,4))
+})
+}
+$("#search").on("click", function(){
+    var topic = $("#topicId").val()  
+var materialsURL =  `https://api.earth911.com/earth911.searchMaterials?api_key=7827591ea2eb59e9&query=${topic}`		
+console.log(materialsURL)
+$.ajax(materialsURL, function(results){
+    console.log("this is materials",results)
+  })
+var locationDetails = `https://api.earth911.com/docs/method/earth911.getLocationDetails?api_key=7827591ea2eb59e9`
+console.log(locationDetails)
+$.ajax(locationDetails, function(results){
+  console.log("this is location details",results)
+})
+})
+
     </script>
   </head>
   <body>
+    <input id="topicId" placeholder="what do you want">
+<button id="search">search</button>
+
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
     <div id="map"></div>
+    <script>src="https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&apikey=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ"</script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>
