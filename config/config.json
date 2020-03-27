@@ -1,8 +1,8 @@
 {
     "development": {
       "username": "root",
-      "password": "Olive9139!",
-      "database": "",
+      "password": "myPassroot4sql$",
+      "database": "begreen_db",
       "host": "127.0.0.1",
       "port": 3306,
       "dialect": "mysql"

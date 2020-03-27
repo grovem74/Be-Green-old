@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s4">
+            <a href="/">
+                <h1 class="title">Be Green</h1>
+            </a>
+        </div>
+        <div class="col s2">
+            <i class="fas fa-leaf fa-4x"></i>
+        </div>
+        <div class="col s5"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s10">
+            <h6>Welcome back, {{name}}.</h6>
+            <br>
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit" class="btn-flat green">Log Out</button>
+            </form>
+            <br>
+            <form action="auth/logout?_method=DELETE" method="POST">
+                <button type="submit" class="btn-flat green">Auth Log Out</button>
+            </form>
+        </div>
+        <div class="col s1"></div>
+    </div>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <i class="fas fa-recycle fa-3x"></i>
+        <li><a href="/map">Find a Recycling Center</a></li>
+        <i class="far fa-lightbulb fa-3x"></i>
+        <li><a href="/tips">Recycling Tips</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+</div>

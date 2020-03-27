@@ -1,10 +1,52 @@
-const express = require("express");
+// // Load environment variables and set inside process.env
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
 
+// // dependencies
+const express = require("express");
 const app = express();
+const exphbs = require("express-handlebars");
 const PORT = process.env.PORT || 8080;
+const passport = require("passport");
+const flash = require("express-flash");
+const session = require("express-session");
+const methodOverride = require("method-override")
+
+
+const initializePassport = require("./config/passport-config");
+initializePassport(
+    passport,
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+)
+
+const users = [];
+
+// setup view engine
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+app.use(express.static("public"));
+
+app.use(express.urlencoded({ extended: false }));
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,  // do not resave if nothing has changed
+    saveUninitialized: false,  // do not save empty values
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride("_method"));
+
+
+
+
 
 //Need database
-var db = require("");
+var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
