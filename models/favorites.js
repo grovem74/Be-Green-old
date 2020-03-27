@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Favorites = sequelize.define("Favorites", {
+    var Favorites = sequelize.define('Favorites', {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -10,14 +10,14 @@ module.exports = function(sequelize, DataTypes) {
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false,     
+        allowNull: false,
       },
       state: {
         type: DataTypes.STRING,
-        allowNull: false,     
+        allowNull: false,
       },
       zip: {
-        type: DataTypes.STRING, 
+        type: DataTypes.STRING,
         allowNull: false,
       }
     });
@@ -29,4 +29,3 @@ module.exports = function(sequelize, DataTypes) {
       };
     return Favorites;
   };
-  

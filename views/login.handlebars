@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s4">
+            <a href="/">
+                <h1 class="title">Be Green</h1>
+            </a>
+        </div>
+        <div class="col s2">
+            <i class="fas fa-leaf fa-4x"></i>
+        </div>
+        <div class="col s5"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col s3"></div>
+        <div class="col s6">
+            {{#if messages.error}}
+            <span class="fail">{{messages.error}}</span>
+            {{/if}}
+            <h6>Sign in with e-mail/password:</h6>
+            <form action="/login" method="POST">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div><br>
+                <button type="submit" class="btn-flat green">Login</button> <a href="/register">Register</a>
+            </form>
+        </div>
+        <div class="col s3"></div>
+    </div>
+
+    <div class="row">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <h6>Sign in with:</h6>
+            <a class="google-btn btn-flat green" href="/auth/google"><i class="fab fa-google fa-lg" id="test"></i></a>
+            <a class="facebook-btn btn-flat green" href="/auth/facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+            <a class="twitter-btn btn-flat green" href="/auth/twitter"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+        <div class="col s3"></div>
+    </div>
+
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <i class="fas fa-recycle fa-3x"></i>
+        <li><a href="/map">Find a Recycling Center</a></li>
+        <i class="far fa-lightbulb fa-3x"></i>
+        <li><a href="/tips">Recycling Tips</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+</div>

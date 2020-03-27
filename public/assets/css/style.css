@@ -1,0 +1,69 @@
+.title {
+    color: #2196f3;
+}
+
+.btn-flat {
+    color: white
+}
+
+h1, h6, i {
+    color: green;
+}
+
+h6 {
+    font-weight: 700;
+}
+
+.fail {
+    color: red;
+}
+
+.fa-leaf {
+    color: green;
+    position: relative;
+    top: .5em;
+    right: 1.5em;
+}
+
+.fa-recycle {
+    color: green;
+    position: relative;
+    top: 1em;
+    left: .3em;
+    margin-top: 2em;
+}
+
+.fa-lightbulb{
+    color: green;
+    position: relative;
+    top: 1em;
+    left: .5em;
+}
+
+li {
+    margin-left: 3em;
+}
+
+.card:hover {
+    border: solid 2px #1565c0;
+}
+
+.google-btn:hover, .facebook-btn:hover, .twitter-btn:hover, .btn-flat:hover, a:hover {
+    color: #1565c0;
+}
+
+.profile-pic {
+    width: 11em;
+    height: 8em;
+    margin-right: 3em;
+}
+
+.trophy {
+    width: 5em;
+    height: 5em;
+}
+
+#tips {
+    position:   relative;
+    left: 6em;
+}

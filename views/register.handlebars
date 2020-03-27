@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col s1"></div>
+        <div class="col s4">
+            <a href="/">
+                <a href="/">
+                    <h1 class="title">Be Green</h1>
+                </a>
+            </a>
+        </div>
+        <div class="col s2">
+            <i class="fas fa-leaf fa-4x"></i>
+        </div>
+        <div class="col s5"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col s3"></div>
+        <div class="col s6">
+            <form action="/register" method="POST">
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-flat green">Register</button>
+            </form>
+            <a href="/">Back</a>
+        </div>
+        <div class="col s3"></div>
+    </div>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <i class="fas fa-recycle fa-3x"></i>
+        <li><a href="/map">Find a Recycling Center</a></li>
+        <i class="far fa-lightbulb fa-3x"></i>
+        <li><a href="/tips">Recycling Tips</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+</div>
