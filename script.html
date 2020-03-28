@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Click Button with Firebase!</title>
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-4">
+            <form>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea type="text" class="form-control" id="comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+
+                <button id="click-button" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+        <div id="comments-area" class="col-8">
+
+
+        </div>
+
+    </div>
+
+
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Firebase Core JavaScript Link -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+
+    <!-- Specific Firebase products we want (Database) -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <!-- ================================================================================== -->
+
+    <script>
+
+        // Initialize Firebase
+        // This is the code we copied and pasted from our app page
+        var config = {
+            apiKey: "AIzaSyAJS4YQWU5DmESeYueG1qH1NGkjv3DncEY",
+            authDomain: "fir-click-counter-7cdb9.firebaseapp.com",
+            databaseURL: "https://fir-click-counter-7cdb9.firebaseio.com",
+            storageBucket: "fir-click-counter-7cdb9.appspot.com"
+        };
+
+        firebase.initializeApp(config);
+
+        // VARIABLES
+        // --------------------------------------------------------------------------------
+
+        // Get a reference to the database service
+        var database = firebase.database();
+
+
+
+        // FUNCTIONS + EVENTS
+        // --------------------------------------------------------------------------------
+
+        // On Click of Button
+        $("#click-button").on("click", function () {
+            event.preventDefault()
+     
+            var newComment = {
+                name: $("#name").val() || "anonymous",
+                comment: $("#comment").val()
+            }
+            console.log(newComment)
+     
+            database.ref().push(newComment);
+
+            database.ref().on("child_added", function (snapshot) {
+
+                // Then we console.log the value of snapshot
+                console.log(snapshot.val());
+
+               
+                var name = snapshot.val().name;
+                var comment = snapshot.val().comment;
+
+                $("#comments-area").append(`<h3>${comment} - Author: ${name}`)
+
+          
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>
