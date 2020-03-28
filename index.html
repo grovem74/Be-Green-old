@@ -1,166 +1,159 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Place Searches</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  
-    <meta charset="utf-8">
-    <style>
 
-      /* Always set the map height explicitly to define the size of the div
+<head>
+  <title>Place Searches</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+  <meta charset="utf-8">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-<script
-    src="https://code.jquery.com/jquery-3.4.1.js"
-    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-    crossorigin="anonymous"></script> 
+    #map {
+      height: 100%;
+    }
 
-    <script>
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  <script>
 
-     // var map;
-      var service;
-      var infowindow;
 
-      function initMap(_locations)  {
-        console.log(_locations)
-        var sydney= new google.maps.LatLng(39.7392, -104.9903);
+    var service;
+    var infowindow;
 
-        // infowindow = new google.maps.InfoWindow();
+    function initMap(_locations) {
 
-        // map = new google.maps.Map(
-        //     document.getElementById('map'), {center: sydney, zoom: 15});
 
-      //   var request = {
-      //     query: 'Recycle',
-      //     fields: ['name', 'geometry'],
-      //   };
+      locations = _locations ? _locations : [
+        ["Barn Store ", 39.67503548162898, -104.87178839800633, 1],
+        ["Bicycle Village", 39.66552438222981, -104.86468372134671, 2],
+        ["Sherwin-Williams", 39.66535249489127, -104.86497020024427, 3],
+        ["Discount Tire", 39.67560843942412, -104.8654858622599, 4]
+      ];
 
-      //   service = new google.maps.places.PlacesService(map);
-
-      //   service.findPlaceFromQuery(request, function(results, status) {
-      //     console.log(results)
-      //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      //       for (var i = 0; i < results.length; i++) {
-      //         createMarker(results[i]);
-      //       }
-
-      //       map.setCenter(results[0].geometry.location);
-      //     }
-      //   });
-      // }
-
-       locations = _locations ? _locations : [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: new google.maps.LatLng(39.742043, -104.991531),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
-
-    for (i = 0; i < locations.length; i++) {  
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: new google.maps.LatLng(39.742043, -104.991531),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
+      var infowindow = new google.maps.InfoWindow();
+
+      var marker, i;
+
+      for (i = 0; i < locations.length; i++) {
+
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+          map: map
+        });
+
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+
           infowindow.setContent(locations[i][0]);
           infowindow.open(map, marker);
-        }
-      })(marker, i));
-    }
 
-      function createMarker(place) {
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-        });
+        })(marker, i));
       }
     }
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    $("#demo").html ( "<div>Geolocation is not supported by this browser.</div>");
-  }
-}
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        $("#demo").html("<div>Geolocation is not supported by this browser.</div>");
+      }
+    }
 
-function showPosition(position) {
-  console.log("this is position",position)
-  $("#demo").html("<div> Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude + "</div>")
+    function showPosition(position) {
+      console.log("this is position", position)
+      $("#demo").html("<div> Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude + "</div>")
 
-var location = `https://api.earth911.com/earth911.searchLocations?api_key=7827591ea2eb59e9&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
-console.log("this is location",location)
-$.get(location,(data)=>{
-  data = JSON.parse(data)
- // console.log("this is data",JSON.stringify(data.result,null,2))
+      var location = `https://api.earth911.com/earth911.searchLocations?api_key=7827591ea2eb59e9&latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`
+      $.get(location, (data) => {
+        data = JSON.parse(data)
 
-  const recycleLocations = data.result.map((location,index) => {
-    return [location.description,location.longitude,location.latitude,index +1]
-  })
-  initMap(recycleLocations.slice(0,4))
-})
-}
+        const recycleLocations = data.result.map((location, index) => {
+          return [location.description, location.latitude, location.longitude, index + 1]
+        })
+        initMap(recycleLocations)
+      })
+    }
 
-$(document).on("click","#search", function(){
-  console.log("search has been clicked")
-    var topic = $("#topicId").val()  
-var materialsURL =  `https://api.earth911.com/earth911.searchMaterials?api_key=7827591ea2eb59e9&query=${topic}`		
-console.log("this is materialURL",materialsURL)
-$.ajax(materialsURL, function(results){
-    console.log("this is materials",results)
-  })
-var locationDetails = `https://api.earth911.com/docs/method/earth911.getLocationDetails?api_key=7827591ea2eb59e9`
-console.log(locationDetails)
-$.ajax(locationDetails, function(results){
-  console.log("this is location details",results)
-})
-})
+    $(document).on("click", "#search", function () {
+      
+
+      var topic = $("#topicId").val()
+
+      var materialsURL = `https://api.earth911.com/earth911.searchMaterials?api_key=7827591ea2eb59e9&query=${topic}`
+      
+
+      $.get(materialsURL, function (results) {
+        results = JSON.parse(results)
+
+        const materialIds = results.result.map(obj => obj.material_id)
+        console.log(materialIds)
+
+        const materialLocationURL = `https://api.earth911.com/earth911.searchLocations?api_key=7827591ea2eb59e9&latitude=39.742043&longitude=-104.991531&${materialIds.map(materialId => "material_id[]=" + materialId + "&").join("")}`
+        console.log(materialLocationURL)
+
+        $.get(materialLocationURL, function (materialLocations) {
+          console.log("this is our material locations", materialLocations)
+
+          materialLocations = JSON.parse(materialLocations)
+
+          const recycleLocations = materialLocations.result.map((location, index) => {
+            return [location.description, location.latitude, location.longitude, index + 1]
+          })
+          initMap(recycleLocations)
+
+
+        })
+      })
+
+      var locationDetails = `https://api.earth911.com/earth911.getLocationDetails?api_key=7827591ea2eb59e9`
+      console.log(locationDetails)
+     
+      $.ajax(locationDetails, function (results) {
+        console.log("this is location details", results)
+      })
+    })
+
+  </script>
+</head>
+
+<body>
+
+  <input id="topicId" placeholder="what do you want">
+
+  <button id="search">Search Material</button>
+
+  <p></p>
+
+  <button onclick="getLocation()">Find Location</button>
+
+  <p id="demo"></p>
+
+  <div id="map"></div>
+
+  <script>src = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&apikey=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ"</script>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ&libraries=places&callback=initMap"
+    async defer>
 
     </script>
-  </head>
-  <body>
-    <input id="topicId" placeholder="what do you want">
-<button id="search">search</button>
 
-<p>Click the button to get your coordinates.</p>
+</body>
 
-<button onclick="getLocation()">Try It</button>
-
-<p id="demo"></p>
-    <div id="map"></div>
-    <script>src="https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=recycle&apikey=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ"</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZHzPiRourRDRoivXdhrjA4zdOhqEVYcQ&libraries=places&callback=initMap" async defer></script>
-  </body>
 </html>
