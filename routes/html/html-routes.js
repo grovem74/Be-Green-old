@@ -115,6 +115,8 @@ function checkAuthenticated(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
     console.log(req.body);
+    //make a database call to find the user based on email entered
+    //use bcrypt 
     
     if (req.isAuthenticated()) {
         return res.redirect("/");
