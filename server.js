@@ -61,8 +61,12 @@ var routes = require('./routes');
 app.use(routes);
 
 
-db.sequelize.sync({ force: true }).then(function () {
-    app.listen(PORT, function () {
-        console.log(`App is now listening on ${PORT}`);
-    });
+// db.sequelize.sync({ force: true }).then(function () {
+//     app.listen(PORT, function () {
+//         console.log(`App is now listening on ${PORT}`);
+//     });
+// });
+
+app.listen(PORT, function () {
+    console.log(`App is now listening on ${PORT}`);
 });

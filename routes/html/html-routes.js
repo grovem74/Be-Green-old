@@ -18,8 +18,12 @@ router.get("/tips", (req, res) => {
     res.render("tips");
 });
 
-router.get("/profile", (req, res) => {
+router.get("/profile", checkAuthenticated, (req, res) => {
     res.render("profile");
+});
+
+router.get("/messages", checkAuthenticated, (req, res) => {
+    res.render("messages");
 });
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
@@ -117,7 +121,7 @@ function checkNotAuthenticated(req, res, next) {
     console.log(req.body);
     //make a database call to find the user based on email entered
     //use bcrypt 
-    
+
     if (req.isAuthenticated()) {
         return res.redirect("/");
     }
