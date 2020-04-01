@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="public/assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="public/assets/css/indexstyle.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
 </head>
 <body>
   <nav class="light-green lighten-1" role="navigation">
@@ -108,17 +109,17 @@
   
     
     
-    <h2 class="gallerytitle">Recycle Projects</h2>
+  <div class="row"><div class="col s12 m4"><h2 class="gallerytitle">Recycle Projects</h2>
     
-    <div class="container" style="height:10%">
+    <div class="container gallery" style="height:10%">
       <div class="mySlides">
         <div class="numbertext">1 / 6</div>
-        <img src="public/assets/images/owlartcraft.jpg" style="width:30%">
+        <img src="public/assets/images/owlartcraft.jpg" style="width:60%">
       </div>
     
       <div class="mySlides">
         <div class="numbertext">2 / 6</div>
-        <img src="public/assets/images/bottleholder.jpg" style="width:30%">
+        <img src="public/assets/images/bottleholder.jpg" style="width:60%">
       </div>
     
       <div class="mySlides">
@@ -156,19 +157,19 @@
           <img class="demo cursor" src="public/assets/images/bottleholder.jpg" style="width:100%" onclick="currentSlide(2)" alt="Pen Holder Project">
         </div>
         <div class="column">
-          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
+          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(3)" alt="">
         </div>
         <div class="column">
-          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(4)" alt="">
         </div>
         <div class="column">
-          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(5)" alt="Nature and sunrise">
+          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(5)" alt="">
         </div>    
         <div class="column">
-          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">
+          <img class="demo cursor" src="" style="width:100%" onclick="currentSlide(6)" alt="">
         </div>
       </div>
-    </div>
+    </div></div>
     
     <script>
     var slideIndex = 1;
@@ -200,6 +201,10 @@
       captionText.innerHTML = dots[slideIndex-1].alt;
     }
     </script>
+
+
+<div class="col s12 m4">
+<iframe class="yt" width="560" height="315" src="https://www.youtube.com/embed/OasbYWF4_S8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
         
 
   <footer class="page-footer light-blue">
@@ -236,6 +241,7 @@
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
   <script src="javascript.js"></script>
+  <script src="http://vjs.zencdn.net/4.12/video.js"></script>
 
   </body>
 </html>

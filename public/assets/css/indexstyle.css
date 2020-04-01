@@ -41,13 +41,22 @@
   border: 2px solid rgba(12, 12, 12, 0.205);
   padding: 0px 12px 0px 15px;
   background: rgba(134, 198, 228, 0.685);
-  margin: 0% 16% 0% 16%;
+  margin: 0% 60% 0% 60%;
   font-size: 35px;
 }
 
 .icon {
   background-color: rgba(77, 241, 126, 0.918);
 }
+
+.gallery {
+  margin: 0% 70%;
+}
+
+.yt {
+  margin: 0% 40%;
+}
+
 
 
     body {
@@ -97,7 +106,7 @@
     
     /* Position the "next button" to the right */
     .next {
-      right: 72%;
+      right: 40%;
       border-radius: 3px 0 0 3px;
       width: 0%;
     }
@@ -123,7 +132,7 @@
       background-color: #222;
       padding: 2px 16px;
       color: white;
-      width: 30%;
+      width: 60%;
     }
     
     .row:after {
