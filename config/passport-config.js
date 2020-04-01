@@ -10,24 +10,24 @@ function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
         const user = getUserByEmail(email)
         if (user == null) {
-            return done(null, false, { message: 'That email address is not registered.' })
+            return done(null, false, { message: 'That email address is not registered.' });
         }
 
         try {
             if (await bcrypt.compare(password, user.password)) {
                 return done(null, user)
             } else {
-                return done(null, false, { message: 'Password is incorrect.' })
+                return done(null, false, { message: 'Password is incorrect.' });
             }
         } catch (e) {
-            return done(e)
+            return done(e);
         }
     }
 
-    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.id))
+    passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser));
+    passport.serializeUser((user, done) => done(null, user.id));
     passport.deserializeUser((id, done) => {
-        return done(null, getUserById(id))
+        return done(null, getUserById(id));
     })
 
     passport.use(new GoogleStrategy({
@@ -36,7 +36,7 @@ function initialize(passport, getUserByEmail, getUserById) {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }, (accessToken, refreshToken, profile, done) => {
         console.log('passport Google callback function fired:');
-        return done(null, console.log(profile));
+        return done(null, console.log("bitch", profile));
     }
     ));
 
@@ -47,7 +47,7 @@ function initialize(passport, getUserByEmail, getUserById) {
     },
         function (accessToken, refreshToken, profile, done) {
             console.log('passport Facebook callback function fired:');
-            return done(null, console.log(profile));
+            return done(null, console.log('heyyy', profile));
         }
     ));
 
@@ -58,7 +58,7 @@ function initialize(passport, getUserByEmail, getUserById) {
     },
         function (token, tokenSecret, profile, done) {
             console.log('passport Twitter callback function fired:');
-            return done(null, console.log(profile));
+            return done(null, console.log('noooo', profile));
         }
     ));
 
