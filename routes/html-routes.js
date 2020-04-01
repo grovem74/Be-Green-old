@@ -1,47 +1,48 @@
 const bcrypt = require('bcrypt');
-const router = require('express').Router();
+//const app = require('express').app();
 const passport = require('passport');
 
 const users = require('../server');
+console.log(users);
 
 module.exports = function(app) {
 
 // routes
-router.get('/', checkAuthenticated, (req, res) => {
-    res.render('index', { name: req.user.name })
+app.get('/', (req, res) => {
+    res.render('index');
 });
 
-router.get('/map', (req, res) => {
+app.get('/map', (req, res) => {
     res.render('map');
 });
 
-router.get('/tips', (req, res) => {
+app.get('/tips', (req, res) => {
     res.render('tips');
 });
 
-router.get('/profile', checkAuthenticated, (req, res) => {
+app.get('/profile', checkAuthenticated, (req, res) => {
     res.render('profile');
 });
 
-router.get('/messages', checkAuthenticated, (req, res) => {
+app.get('/messages', checkAuthenticated, (req, res) => {
     res.render('messages');
 });
 
-router.get('/login', checkNotAuthenticated, (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login')
 });
 
-router.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register')
 });
 
-router.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
     successRedirect: '/success',
     failureRedirect: '/login',
     failureFlash: true
 }));
 
-router.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10) // hash user password 10 times
         //create call to database here
@@ -60,7 +61,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
     console.log('this is local strategy', users);
 })
 
-router.delete('/logout', (req, res) => {
+app.delete('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 })
@@ -69,21 +70,21 @@ router.delete('/logout', (req, res) => {
 // auth routes
 
 // authenticate with Google
-router.get('/auth/google', passport.authenticate('google', {
+app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
-router.get('/auth/google/cb', passport.authenticate('google', {
+app.get('/auth/google/cb', passport.authenticate('google', {
     successRedirect: '/success',
     failureRedirect: '/',
     failureFlash: true
 }));
 
 // authenticate with Facebook
-router.get('/auth/facebook', passport.authenticate('facebook', {
+app.get('/auth/facebook', passport.authenticate('facebook', {
 }));
 
-router.get('/auth/facebook/cb',
+app.get('/auth/facebook/cb',
     passport.authenticate('facebook', {
         successRedirect: '/success',
         failureRedirect: '/',
@@ -91,21 +92,21 @@ router.get('/auth/facebook/cb',
     }));
 
 // authenticate with Twitter
-router.get('/auth/twitter', passport.authenticate('twitter', {
+app.get('/auth/twitter', passport.authenticate('twitter', {
 }));
 
-router.get('/auth/twitter/cb',
+app.get('/auth/twitter/cb',
     passport.authenticate('twitter', {
         successRedirect: '/success',
         failureRedirect: '/',
         failureFlash: true
     }));
 
-router.get('/success', checkNotAuthenticated, (req, res) => {
+app.get('/success', checkNotAuthenticated, (req, res) => {
     res.render('success')
 });
 
-router.delete('/auth/logout', (req, res) => {
+app.delete('/auth/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 })
@@ -129,4 +130,5 @@ function checkNotAuthenticated(req, res, next) {
     next();
 }
 
-}
+ }
+
