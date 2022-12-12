@@ -21,7 +21,7 @@
   "homepage": "https://github.com/grovem74/Be-Green#readme",
   "dependencies": {
     "eslint": "^6.8.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mysql2": "^1.6.4",
     "sequelize": "^4.41.2",
     "bcrypt": "^4.0.1",
